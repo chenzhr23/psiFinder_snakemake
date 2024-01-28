@@ -12,7 +12,7 @@
   - [Run psiFinder snakemake](#run-psiFinder-snakemake)
 
 ### Pre-installation
-**psiFinder_snakemake** requires **snakemake/seqtk/cutadapt/STAR/bedtools/gtfToGenePred and several perl/python/R packages** pre-installation and predominantly used in unix-based operating systems. Therefore, for the usability of **psiFinder_snakemake**, we recommend running all the tools and scripts in WSL2 (WSL2 installation guide: https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/) or unix-based system with R and python.
+**psiFinder_snakemake** requires **snakemake/seqtk/cutadapt/STAR/bedtools/gtfToGenePred and several perl/python/R packages** pre-installation and predominantly used in unix-based operating systems. Therefore, for the usability of **psiFinder_snakemake**, we recommend running all the tools and scripts in WSL2 (WSL2 installation guide: https://pureinfotech.com/install-windows-subsystem-linux-2-windows-10/) or unix-based system with perl, python and R.
 
 Required perl modules:
 ```perl
