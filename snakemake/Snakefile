@@ -1,0 +1,266 @@
+configfile: "quickstart_config.yml"
+
+input_fastq,=glob_wildcards("./snakemake/reads/input/" + "{input}.fastq")
+treat_fastq,=glob_wildcards("./snakemake/reads/treat/" + "{treat}.fastq")
+
+rule all:
+    input:
+        #single end mode
+        expand('snakemake/output/sites_identification/{input}_versus_{treat}/{input}_versus_{treat}.bed',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/sites_annotation/{input}_versus_{treat}/{input}_versus_{treat}_metagene_pseudoU_norm_length.pdf',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/ann/{input}_versus_{treat}/{input}_versus_{treat}_ann_psi_prediction.bed',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/svm/{input}_versus_{treat}/{input}_versus_{treat}_svm_psi_prediction.bed',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/user_defined/{input}_versus_{treat}/{input}_versus_{treat}_user_defined_prediction.bed',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/sites_annotation/{input}_versus_{treat}/{input}_versus_{treat}_add_seq_group_uniq.bed',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/sites_target_prediction/{input}_versus_{treat}/{input}_versus_{treat}_fa.out',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/sites_target_prediction/{input}_versus_{treat}/overall_multinomialnb_model_prediction.txt',input = input_fastq,treat=treat_fastq)
+
+rule cutadapt_input:
+    input:
+        "snakemake/reads/input/{input}.fastq"
+    output:
+        fastq="snakemake/trimmed/input/{input}.fastq",
+        qc="snakemake/trimmed/input/{input}.qc.txt"
+    params:
+        adapters=" -a " + config["se_ad5_input"] + " -g " + config["se_ad3_input"],
+        extra="-O 3 -m 20 -e 0.1 -q 20,20" + " -u " + config["se_br5_input"] + " -u " + config["se_br3_input"],
+        se_ad5_input=config["se_ad5_input"],
+        se_ad3_input=config["se_ad3_input"]
+    log:
+        "snakemake/logs/cutadapt/{input}.log"
+    threads: 16 
+    script:
+        "script/cutadapt_se.py"
+
+rule cutadapt_treat:
+    input:
+        "snakemake/reads/treat/{treat}.fastq"
+    output:
+        fastq="snakemake/trimmed/treat/{treat}.fastq",
+        qc="snakemake/trimmed/treat/{treat}.qc.txt"
+    params:
+        adapters=" -a " + config["se_ad5_treat"] + " -g " + config["se_ad3_treat"],
+        extra="-O 3 -m 20 -e 0.1 -q 20,20" + " -u " + config["se_br5_treat"] + " -u " + config["se_br3_treat"],
+        se_ad5_treat=config["se_ad5_treat"],
+        se_ad3_treat=config["se_ad3_treat"]
+    log:
+        "snakemake/logs/cutadapt/{treat}.log"
+    threads: 16 
+    script:
+        "script/cutadapt_se.py"
+
+rule star_index:
+    input:
+        ref = "snakemake/genome/" + config["assembly"] + ".fa"
+    output:
+        directory("snakemake/genome/" + config["assembly"])
+    message:
+        "Generating STAR index..."
+    threads: 16
+    params:
+        extra = ""
+    log:
+        "snakemake/logs/star/star_index_" + config["assembly"] + ".log"
+    script:
+        "script/star_index.py"
+
+rule star_input:
+    input:
+        fq1 = "snakemake/trimmed/input/{input}.fastq"
+    output:
+        # see STAR manual for additional output files
+        "snakemake/star/input/{input}/Aligned.sortedByCoord.out.bam"
+    log:
+        "snakemake/logs/star/input/{input}.log"
+    params:
+        # path to STAR reference genome index
+        index="snakemake/genome/" + config["assembly"],
+        # optional parameters
+        extra=""
+    threads: 16
+    script:
+        "script/star_align.py"
+
+rule star_treat:
+    input:
+        fq1 = "snakemake/trimmed/treat/{treat}.fastq"
+    output:
+        # see STAR manual for additional output files
+        "snakemake/star/treat/{treat}/Aligned.sortedByCoord.out.bam"
+    log:
+        "snakemake/logs/star/treat/{treat}.log"
+    params:
+        # path to STAR reference genome index
+        index="snakemake/genome/" + config["assembly"],
+        # optional parameters
+        extra=""
+    threads: 16
+    script:
+        "script/star_align.py"
+
+rule rtsSeeker:
+    input:
+        rtsSeeker_input = rules.star_input.output,
+        rtsSeeker_treat = rules.star_treat.output,
+        ref_fa = "snakemake/genome/"+ config["assembly"]+".fa",
+        ref_fa_fai = "snakemake/genome/" + config["assembly"] +".fa.fai"
+    output:
+        "snakemake/output/sites_identification/{input}_versus_{treat}/{input}_versus_{treat}.bed"
+    message:
+        "Running rtsSeeker to get Ψ-sites identification results..."
+    params:
+        extra = "-p 1.5 -t 5 -r 0.05 -M 1 --gene snakemake/script/hg38.gencode.v30.tRNA.refseqNcRNA.geneAnno.bed12 -f 1 -m 0 -s -w 20"
+    log:
+        rtsSeeker_log = "snakemake/logs/{input}_versus_{treat}_rtsSeeker.log"
+    shell:
+        """
+        snakemake/script/rtsSeeker --fa {input.ref_fa} \
+        --fai {input.ref_fa_fai} \
+        --treat {input.rtsSeeker_treat} \
+        --input {input.rtsSeeker_input} \
+        {params.extra} \
+        -o {output} 2> {log.rtsSeeker_log}
+        """
+
+rule ANN:
+    input:
+        out = rules.rtsSeeker.output
+    output:
+        "snakemake/output/ann/{input}_versus_{treat}/{input}_versus_{treat}_ann_psi_prediction.bed"
+    message:
+        "Generating ANN result..."
+    log:
+        ANN_log = "snakemake/logs/{input}_versus_{treat}_ann.log"
+    shell:
+        """
+        snakemake/script/ann/ann.sh {input.out} {output} 2> {log.ANN_log}
+        """
+
+rule SVM:
+    input:
+        out = rules.rtsSeeker.output
+    output:
+        "snakemake/output/svm/{input}_versus_{treat}/{input}_versus_{treat}_svm_psi_prediction.bed"
+    message:
+        "Generating svm result..."
+    log:
+        SVM_log = "snakemake/logs/{input}_versus_{treat}_svm.log"
+    shell:
+        """
+        snakemake/script/svm/svm.sh {input.out} {output} 2> {log.SVM_log}
+        """
+
+rule User_defined:
+    input:
+        out = rules.rtsSeeker.output
+    output:
+        "snakemake/output/user_defined/{input}_versus_{treat}/{input}_versus_{treat}_user_defined_psi_prediction.bed"
+    params:
+        treatpre_Fold_thres = config["treatpre_Fold_thres"],
+        preFold_FC_thres = config["preFold_FC_thres"],
+        treataft_Fold_thres = config["treataft_Fold_thres"],
+        aftFold_FC_thres = config["aftFold_FC_thres"],
+        treatstoprate_thres = config["treatstoprate_thres"],
+        stoprate_FC_thres = config["stoprate_FC_thres"]
+    message:
+        "Generating user-defined result..."
+    log:
+        UD_log = "snakemake/logs/{input}_versus_{treat}_ud.log"
+    shell:
+        """
+        snakemake/script/user_defined/user_defined.sh {input.out} {output} {params.treatpre_Fold_thres} {params.preFold_FC_thres} {params.treataft_Fold_thres} {params.aftFold_FC_thres} {params.treatstoprate_thres} {params.stoprate_FC_thres}  2> {log.UD_log}
+        """
+
+def select_bedAnnotator_input(wildcards):
+    if config['ann'] == 'true':
+        return rules.ANN.output
+    elif config['svm'] == 'true':
+        return rules.SVM.output
+    elif config['user_defined'] == 'true':
+        return rules.User_defined.output
+
+rule bedAnnotator:
+    input:
+        bedAnnotator_input = select_bedAnnotator_input,
+        ref_bed6 = "snakemake/script/annotation/hg38.genecode.v30.tRNA.snoRNA.miRNA.rmsk.exonFeatures.bed6"
+    output:
+        "snakemake/output/sites_annotation/{input}_versus_{treat}/{input}_versus_{treat}_add_seq_group_uniq.bed"
+    params:
+        ann = config["ann"],
+        svm = config["svm"],
+        user_defined = config["user_defined"]
+    message:
+        "Running bedAnnotator to get Ψ-sites annotation results..."
+    log:
+        bedAnnotator_log = "snakemake/logs/{input}_versus_{treat}_bedAnnotator.log"
+    shell:
+        """
+        snakemake/script/annotation/bed_annotation.sh -i {input.bedAnnotator_input} \
+        -a {input.ref_bed6} \
+        -b {params.ann} \
+        -c {params.svm} \
+        -d {params.user_defined} \
+        -e {output} \
+        2> {log.bedAnnotator_log}
+        """
+
+rule metagene:
+    input:
+        metagene_input = rules.bedAnnotator.output,
+        ref_fa = "snakemake/genome/"+ config["assembly"]+".fa",
+        anno_gtf = "snakemake/script/metagene/gencode.v32.chr_patch_hapl_scaff.annotation.gtf"
+        # bed6 = "snakemake/script/annotation/hg38.genecode.v30.tRNA.snoRNA.miRNA.rmsk.exonFeatures.bed6"
+        # genome = "snakemake/script/metagene/genome"
+    output:
+        "snakemake/output/sites_annotation/{input}_versus_{treat}/{input}_versus_{treat}_metagene_pseudoU_norm_length.pdf"
+    message:
+        "Generating metagene plot..."
+    log:
+        metagene_log = "snakemake/logs/{input}_versus_{treat}_metagene.log"
+    shell:
+        """
+        snakemake/script/metagene/metagene.sh -i {input.metagene_input} \
+        -g {input.ref_fa} \
+        -a {input.anno_gtf} \
+        2> {log.metagene_log}
+        """
+
+rule ACAscan:
+    input:
+        # ACAscan_input = rules.rtsSeeker.output,
+        ACAscan_input = rules.bedAnnotator.output,
+        acaboxseq = "snakemake/script/target_prediction/human_hg38_snoRNABase_snoDB_rmRepeat.collapse.fa"
+    output:
+        "snakemake/output/sites_target_prediction/{input}_versus_{treat}/{input}_versus_{treat}_fa.out"
+    message:
+        "Running ACAscan to get Ψ-sites snoRNA target prediction results..."
+    log:
+        ACAscan_log = "snakemake/logs/{input}_versus_{treat}_ACAscan.log"
+    shell:
+        """
+        snakemake/script/target_prediction/ACA_scan.sh {input.ACAscan_input} \
+        {input.acaboxseq} \
+        {output} \
+        2> {log.ACAscan_log}
+        """
+
+rule PUSscan:
+    input:
+        # PUSscan_input = rules.rtsSeeker.output,
+        PUSscan_input = rules.bedAnnotator.output,
+        pre_build_model = "snakemake/script/target_prediction/overall_multinomialnb_model.pkl"
+    output:
+        "snakemake/output/sites_target_prediction/{input}_versus_{treat}/overall_multinomialnb_model_prediction.txt"
+    message:
+        "Running PUSscan to get Ψ-sites PUS target prediction results..."
+    log:
+        PUSscan_log = "snakemake/logs/{input}_versus_{treat}_PUSscan.log"
+    params:
+        output_dir_path = "snakemake/output/sites_target_prediction/{input}_versus_{treat}"
+    shell:
+        """
+        python snakemake/script/target_prediction/PUSscan_predict.py -to_predict {input.PUSscan_input} \
+        -model_file {input.pre_build_model} \
+        -output_dir {params.output_dir_path} \
+        2> {log.PUSscan_log}
+        """

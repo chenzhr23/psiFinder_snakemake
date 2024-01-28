@@ -1,0 +1,816 @@
+Your quickstart job is starting, please wait...
+input: unzipping and redirecting fasta file...
+
+treat: unzipping and redirecting fasta file...
+
+check info: Input is not fastq files
+check info: Input is fasta files
+==Starting a quickstart job...==:
+
+ad_remove_input:"false"
+Moving input trimmed fastq...
+
+ad_remove_treat:"false"
+Moving treat trimmed fastq...
+
+snakemake/genome/hg38 is not empty, STAR index have been built
+sites_identification:"true"
+Getting rtsSeeker result for Ψ sites identification...
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       rtsSeeker
+        1       star_input
+        1       star_treat
+        3
+Select jobs to execute...
+
+[Fri Jan 26 21:54:55 2024]
+rule star_input:
+    input: snakemake/trimmed/input/A1.fastq
+    output: snakemake/star/input/A1/Aligned.sortedByCoord.out.bam
+    log: snakemake/logs/star/input/A1.log
+    jobid: 1
+    wildcards: input=A1
+    threads: 8
+
+[Fri Jan 26 22:25:48 2024]
+Finished job 1.
+1 of 3 steps (33%) done
+Select jobs to execute...
+
+[Fri Jan 26 22:25:49 2024]
+rule star_treat:
+    input: snakemake/trimmed/treat/A2.fastq
+    output: snakemake/star/treat/A2/Aligned.sortedByCoord.out.bam
+    log: snakemake/logs/star/treat/A2.log
+    jobid: 2
+    wildcards: treat=A2
+    threads: 8
+
+[Fri Jan 26 22:59:11 2024]
+Finished job 2.
+2 of 3 steps (67%) done
+Select jobs to execute...
+
+[Fri Jan 26 22:59:11 2024]
+Job 0: Running rtsSeeker to get Ψ-sites identification results...
+
+[Sat Jan 27 02:39:52 2024]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: /public/home/chenzr/software/qt_project/psiFinder_dev/psiFinder_v1/build/psiFinder/.snakemake/log/2024-01-26T215454.417627.snakemake.log
+ann:"true"
+Getting ann result for Ψ sites identification...
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       ANN
+        1
+Select jobs to execute...
+
+[Sat Jan 27 02:39:56 2024]
+Job 0: Generating ANN result...
+
+rtsSeeker ann mode: start filtering rtsSeeker result...
+getting roc_plot.txt
+[1] "snakemake/output/ann/A1_versus_A2/A1_versus_A2_ann_plot.txt"
+[1] "snakemake/output/ann/A1_versus_A2/A1_versus_A2_ann_filt_totalRNA.bed"
+[1] "snakemake/script/ann/hg38_human_chr21_rRNA_known_pseudoU_SingleSites.bed"
+[1] "snakemake/script/ann/hg38.psiU.SingleSites.bed"
+[1] "snakemake/output/ann/A1_versus_A2/A1_versus_A2"
+
+
+=====================Load data to perform classification model (factor as input)=====================
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+Scale for y is already present.
+Adding another scale for y, which will replace the existing scale.
+Scale for fill is already present.
+Adding another scale for fill, which will replace the existing scale.
+total classification:
+non_psi     psi
+    645      96
+Saving 7 x 7 in image
+Saving 7 x 7 in image
+
+ training set classification using sample.split:
+non_psi     psi
+    451      67
+ treatPreRpmFold    preRpmFoldRatio   treatAfterRpmFold  afterRpmFoldRatio
+ Min.   :-0.77181   Min.   :-0.6571   Min.   :-0.60107   Min.   :-0.5731
+ 1st Qu.:-0.54349   1st Qu.:-0.3364   1st Qu.:-0.46677   1st Qu.:-0.3378
+ Median :-0.30870   Median :-0.2866   Median :-0.33088   Median :-0.2974
+ Mean   : 0.00000   Mean   : 0.0000   Mean   : 0.00000   Mean   : 0.0000
+ 3rd Qu.: 0.08742   3rd Qu.:-0.1893   3rd Qu.:-0.03967   3rd Qu.:-0.2483
+ Max.   : 5.99228   Max.   : 9.2754   Max.   : 7.71793   Max.   : 7.5596
+ treatStopRatio     stopRatioFC          class        psi
+ Min.   :-0.6371   Min.   :-0.1972   non_psi:451   Mode :logical
+ 1st Qu.:-0.4893   1st Qu.:-0.1911   psi    : 67   FALSE:451
+ Median :-0.3581   Median :-0.1825                 TRUE :67
+ Mean   : 0.0000   Mean   : 0.0000
+ 3rd Qu.:-0.1225   3rd Qu.:-0.1526
+ Max.   : 4.8117   Max.   :20.9460
+  non_psi
+ Mode :logical
+ FALSE:67
+ TRUE :451
+
+
+
+
+ test set classification using sample.split:
+non_psi     psi
+    194      29
+ treatPreRpmFold    preRpmFoldRatio    treatAfterRpmFold   afterRpmFoldRatio
+ Min.   :-0.76432   Min.   :-0.65491   Min.   :-0.600919   Min.   :-0.570398
+ 1st Qu.:-0.59561   1st Qu.:-0.33920   1st Qu.:-0.461771   1st Qu.:-0.338688
+ Median :-0.41172   Median :-0.29096   Median :-0.337591   Median :-0.290026
+ Mean   : 0.03032   Mean   : 0.04208   Mean   : 0.116167   Mean   :-0.000076
+ 3rd Qu.:-0.04358   3rd Qu.:-0.16981   3rd Qu.: 0.001771   3rd Qu.:-0.244981
+ Max.   : 6.14143   Max.   : 6.94822   Max.   :13.465377   Max.   : 5.345221
+ treatStopRatio      stopRatioFC           class        psi
+ Min.   :-0.61037   Min.   :-0.19727   non_psi:194   Mode :logical
+ 1st Qu.:-0.50886   1st Qu.:-0.19021   psi    : 29   FALSE:194
+ Median :-0.38159   Median :-0.17853                 TRUE :29
+ Mean   :-0.02914   Mean   :-0.03328
+ 3rd Qu.:-0.09485   3rd Qu.:-0.15085
+ Max.   : 4.02206   Max.   : 2.06548
+  non_psi
+ Mode :logical
+ FALSE:29
+ TRUE :194
+
+
+
+$struct
+[1]  6 12 12  2
+
+$wts
+$wts$`hidden 1 1`
+[1] -0.1092188  0.7730235 -0.2819675 -2.2121137  0.1330297 -1.2731695 -3.8118723
+
+$wts$`hidden 1 2`
+[1]  0.3721034  1.2234748 -0.7269292 -2.2258131  0.1769961 -1.1342055 -0.9441748
+
+$wts$`hidden 1 3`
+[1]  0.16142626  0.23025775  0.09650635 -0.48659148  1.20215287  0.12943157
+[7]  0.98718528
+
+$wts$`hidden 1 4`
+[1]  0.4993198 -0.3452675 -1.7760628  1.3272085 -2.0613167 -0.2038593 -0.1417454
+
+$wts$`hidden 1 5`
+[1] -0.21163745 -0.15257018 -0.04629650 -0.75967318 -1.00019333  0.01344736
+[7] -2.96969048
+
+$wts$`hidden 1 6`
+[1]  0.72707517  0.16917336 -2.15198066 -0.04133626 -2.09154180  0.31289150
+[7]  0.74872897
+
+$wts$`hidden 1 7`
+[1] -1.0750389 -0.3147755  0.3108454  0.7663618  0.1975532  0.3934778  0.2599632
+
+$wts$`hidden 1 8`
+[1] -0.5759688  0.2369689 -0.6192478  0.1300779 -2.9445623 -1.2589545 -1.8001009
+
+$wts$`hidden 1 9`
+[1]  0.4020307 -1.0815312 -3.3314456  1.8303166 -3.1650343  0.2732461  0.1734435
+
+$wts$`hidden 1 10`
+[1] -5.224499 -1.881699 -1.064651 -2.655314 24.472639  4.262691 14.684208
+
+$wts$`hidden 1 11`
+[1]  2.17899616 -0.98944167  1.19749495 -0.05412193  1.05844538  0.77005374
+[7] -0.18174135
+
+$wts$`hidden 1 12`
+[1]  0.1841797 -1.5568129 -2.5308027  0.1729415 -2.7351948  1.4578022  0.6095023
+
+$wts$`hidden 2 1`
+ [1] -1.1533879 -0.9265871  0.5041036  2.1056219  0.3859966 -0.1506965
+ [7] -1.4152643  1.8060018  0.7922670  0.5046933  0.6244117 -0.4491952
+[13]  0.6207855
+
+$wts$`hidden 2 2`
+ [1]  -1.1179893  -0.9442154  -2.6797714   0.3133881   6.7590630  22.3187957
+ [7]   2.4084787  -1.8429099 -27.7398464 -14.1815868   1.7386710  -2.7896567
+[13]  -3.8929073
+
+$wts$`hidden 2 3`
+ [1] -0.2458089 -0.9552764  0.2408099 -1.7231838  0.6321313  0.3400877
+ [7]  0.2211831  0.4525371 -2.7388027 -0.1997471  0.5168535  0.1433783
+[13] -1.4030338
+
+$wts$`hidden 2 4`
+ [1] -0.96562258 -0.11832042 -0.85259305 -0.19545192  0.99834839 -0.22545830
+ [7] -1.29793330  0.69215483  1.09818196  0.01340915 -0.13464047 -0.09273167
+[13] -0.28591972
+
+$wts$`hidden 2 5`
+ [1] -0.03803067  0.68803258  0.32918090 -0.63555944  0.76791520 -0.32559145
+ [7] -0.68908616  0.66622778  0.08967886  0.05191942  0.47971026  0.06334102
+[13]  0.09696813
+
+$wts$`hidden 2 6`
+ [1]  0.17119167  0.89590385  0.02607390 -1.29062098 -2.21308158  2.49584190
+ [7]  1.24161512  2.20553042 -0.28146512 -0.37837953  0.19111013 -0.63800939
+[13] -0.02924461
+
+$wts$`hidden 2 7`
+ [1]  0.16963450 -1.60837374  0.72046394  1.09961213  1.28472853  0.01972438
+ [7] -2.34685377  1.12731921 -0.78540267 -0.33124519 -1.04027239 -1.98679848
+[13]  0.81515954
+
+$wts$`hidden 2 8`
+ [1] -1.4619362 -1.1489030  0.4580376  0.1608586 -0.8693658  0.6131491
+ [7]  0.5781253  0.3980695  1.4814714  0.3749025  1.9622210 -0.3262529
+[13] -0.6926561
+
+$wts$`hidden 2 9`
+ [1]  1.4791423  0.1227162 -0.9244491 -0.5429050 -1.6166777  0.1753593
+ [7]  0.1055388  0.9133756  0.1213388  0.6257645 -0.5820641 -0.7020783
+[13] -0.2991878
+
+$wts$`hidden 2 10`
+ [1]  1.7325826 -0.2464056  0.3851306 -1.0269932  0.2977135  1.3906938
+ [7] -0.2741753  1.0523604 -0.7564892 -0.7656966 -0.9826605 -1.4073874
+[13] -0.5620406
+
+$wts$`hidden 2 11`
+ [1]   1.97662606  -0.25966845   1.55986692   2.12347163  -0.21448542
+ [6]   0.39480063  -0.48097279  -0.05995088  -0.71328061   0.85382518
+[11] 239.79780075   0.44731336  -0.07600342
+
+$wts$`hidden 2 12`
+ [1] -1.0087789 -2.5603329  0.1961606  1.1394467  0.4005004  1.5790761
+ [7] -0.9149633 -0.8766342  3.1368752  0.2468868 -0.8247360  0.6920020
+[13]  1.4775661
+
+$wts$`out 1`
+ [1]  0.16222582  1.30610880 -4.00113844  2.19020551  0.19049404 -0.47723844
+ [7]  0.33653603 -2.40843675  0.64115669 -0.36358041 -0.35050669 -0.04343018
+[13] -0.47884646
+
+$wts$`out 2`
+ [1] -1.6690446  0.6609589  4.1084760 -2.6241858  1.1636311 -0.6341369
+ [7]  0.1926891  1.4041121 -0.9954436 -1.4514133  1.5826987  1.9811570
+[13]  0.6558998
+
+
+ℹ SHA-1 hash of file is "74c80bd5ddbc17ab3ae5ece9c0ed9beb612e87ef"
+Loading required package: scales
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+Loading required package: reshape
+pred
+non_psi     psi
+    193      30
+best roc threshold:  threshold
+0.08352059
+                    Length Class      Mode
+call                   5   -none-     call
+response            1036   -none-     logical
+covariate           3108   -none-     numeric
+model.list             2   -none-     list
+err.fct                1   -none-     function
+act.fct                1   -none-     function
+linear.output          1   -none-     logical
+data                   9   data.frame list
+exclude                0   -none-     NULL
+net.result            10   -none-     list
+weights               10   -none-     list
+generalized.weights   10   -none-     list
+startweights          10   -none-     list
+result.matrix       2690   -none-     numeric
+List of 14
+ $ call               : language neuralnet(formula = psi + non_psi ~ treatPreRpmFold + preRpmFoldRatio +      treatAfterRpmFold + afterRpmFoldRati| __truncated__ ...
+ $ response           : logi [1:518, 1:2] TRUE TRUE TRUE TRUE TRUE TRUE ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. ..$ : chr [1:2] "psi" "non_psi"
+ $ covariate          : num [1:518, 1:6] 0.24 -0.628 0.385 -0.695 1.355 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. ..$ : chr [1:6] "treatPreRpmFold" "preRpmFoldRatio" "treatAfterRpmFold" "afterRpmFoldRatio" ...
+ $ model.list         :List of 2
+  ..$ response : chr [1:2] "psi" "non_psi"
+  ..$ variables: chr [1:6] "treatPreRpmFold" "preRpmFoldRatio" "treatAfterRpmFold" "afterRpmFoldRatio" ...
+ $ err.fct            :function (x, y)
+  ..- attr(*, "type")= chr "sse"
+ $ act.fct            :function (x)
+  ..- attr(*, "type")= chr "logistic"
+ $ linear.output      : logi TRUE
+ $ data               :'data.frame':    518 obs. of  9 variables:
+  ..$ treatPreRpmFold  : num [1:518] 0.24 -0.628 0.385 -0.695 1.355 ...
+  ..$ preRpmFoldRatio  : num [1:518] 0.00933 -0.58982 0.41473 0.12339 0.77347 ...
+  ..$ treatAfterRpmFold: num [1:518] 0.418 2.602 2.475 -0.266 6.452 ...
+  ..$ afterRpmFoldRatio: num [1:518] -0.1829 0.8449 0.0211 2.2368 0.7477 ...
+  ..$ treatStopRatio   : num [1:518] 4.295 0.784 3.022 -0.479 1.169 ...
+  ..$ stopRatioFC      : num [1:518] -0.1345 -0.0145 0.0955 0.0995 0.1629 ...
+  ..$ class            : Factor w/ 2 levels "non_psi","psi": 2 2 2 2 2 2 2 2 2 2 ...
+  ..$ psi              : logi [1:518] TRUE TRUE TRUE TRUE TRUE TRUE ...
+  ..$ non_psi          : logi [1:518] FALSE FALSE FALSE FALSE FALSE FALSE ...
+ $ exclude            : NULL
+ $ net.result         :List of 10
+  ..$ : num [1:518, 1:2] 1.022 1.005 0.997 1.002 0.993 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 1 0.988 0.998 1.005 1.002 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 1.008 1.005 1.015 0.987 0.999 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 0.996 0.982 1.005 0.988 0.999 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 0.989 0.996 0.991 0.991 0.99 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 0.994 0.989 1.013 0.963 0.989 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 1.016 1.012 0.981 1.001 0.993 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 0.993 0.999 0.987 1 1.015 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 0.994 0.986 1.002 0.984 1 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:2] 1.001 0.994 0.994 0.998 1.008 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+ $ weights            :List of 10
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -0.109 0.773 -0.282 -2.212 0.133 ...
+  .. ..$ : num [1:13, 1:12] -1.153 -0.927 0.504 2.106 0.386 ...
+  .. ..$ : num [1:13, 1:2] 0.162 1.306 -4.001 2.19 0.19 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 0.1389 0.0155 0.9454 0.2113 0.8945 ...
+  .. ..$ : num [1:13, 1:12] 0.292 0.148 0.861 0.876 -2.728 ...
+  .. ..$ : num [1:13, 1:2] 0.1447 -0.0803 -0.2453 1.3521 -2.2611 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -3.5425 0.2201 -3.355 0.0207 4.0162 ...
+  .. ..$ : num [1:13, 1:12] 0.358 0.179 -0.532 -0.564 1.473 ...
+  .. ..$ : num [1:13, 1:2] -1.153 -1.422 -0.24 1.09 -0.482 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 1.071 1.673 -0.559 0.53 -8.475 ...
+  .. ..$ : num [1:13, 1:12] -0.363 0.595 -0.13 -0.813 -0.814 ...
+  .. ..$ : num [1:13, 1:2] 1.983 0.337 -0.611 1.066 -0.63 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -0.0788 -1.6037 -0.2628 0.8912 0.8961 ...
+  .. ..$ : num [1:13, 1:12] -1.285 3.059 -1.621 -1.111 0.692 ...
+  .. ..$ : num [1:13, 1:2] -0.214 -1.473 -0.189 0.973 0.386 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -1.557 -0.16 -0.93 0.731 -0.332 ...
+  .. ..$ : num [1:13, 1:12] 1.09 -2.92 5.66 -1.41 3.5 ...
+  .. ..$ : num [1:13, 1:2] -0.661 1.134 -0.493 0.263 -0.313 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -4.207 0.336 0.72 0.8 -1.189 ...
+  .. ..$ : num [1:13, 1:12] -1.036 0.859 -0.223 0.811 1.057 ...
+  .. ..$ : num [1:13, 1:2] -0.698 1.401 -0.501 0.376 0.685 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 4.135 1.78 1.883 -1.04 0.873 ...
+  .. ..$ : num [1:13, 1:12] -0.2 1.127 -0.103 0.105 -1.547 ...
+  .. ..$ : num [1:13, 1:2] 0.279 0.304 0.725 -1.086 0.923 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -1.395 -2.465 1.365 1.358 -0.392 ...
+  .. ..$ : num [1:13, 1:12] -1.1768 -1.9758 0.048 0.0585 -0.9825 ...
+  .. ..$ : num [1:13, 1:2] 0.508 -1.498 0.223 0.668 -0.41 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 2.592 1.427 1.038 1.428 0.396 ...
+  .. ..$ : num [1:13, 1:12] -0.3048 -2.0543 -0.0378 0.2742 0.5336 ...
+  .. ..$ : num [1:13, 1:2] -1.405 0.567 0.573 1.482 -0.533 ...
+ $ generalized.weights:List of 10
+  ..$ : num [1:518, 1:12] -0.912 -35.398 -76.718 -68.529 -95.876 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] 4.634 -13.211 -4.766 -0.758 0.304 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] -20 -34.9 -21.6 -1.8 130.8 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] -42.1296 8.7693 2.1969 -0.0026 -2.5847 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] -1.2 -13.2 4.63 19.3 -10.57 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] 10.96 10.49 13.32 -1.93 -31.14 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] 23.22 17.75 -6.64 8.44 52.53 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] -7.72 444.44 31.61 -425.24 -5.31 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] -3.683 0.513 -18.278 10.935 -32.509 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+  ..$ : num [1:518, 1:12] -59.259 0.392 -1.568 1.985 7.708 ...
+  .. ..- attr(*, "dimnames")=List of 2
+  .. .. ..$ : chr [1:518] "rtsSeeker-33306" "rtsSeeker-36476" "rtsSeeker-37197" "rtsSeeker-37225" ...
+  .. .. ..$ : NULL
+ $ startweights       :List of 10
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -1.0435 0.2465 0.0701 -1.4838 1.6317 ...
+  .. ..$ : num [1:13, 1:12] -1.4652 -1.6239 0.1923 1.7445 0.0788 ...
+  .. ..$ : num [1:13, 1:2] 0.0553 1.2054 -1.7463 -0.7519 0.0776 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 0.167 0.137 0.314 -0.274 1.048 ...
+  .. ..$ : num [1:13, 1:12] 0.28654 -0.00411 0.68681 -0.14468 -0.61208 ...
+  .. ..$ : num [1:13, 1:2] 0.312911 -0.000204 -0.250648 1.520275 -2.093257 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -1.6449 0.2084 0.0463 0.2466 0.4938 ...
+  .. ..$ : num [1:13, 1:12] 0.106 0.38 -0.463 -0.885 -0.103 ...
+  .. ..$ : num [1:13, 1:2] -0.953 -1.224 0.113 1.29 -0.197 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 1.61 1.41 -1.01 1.42 -1.45 ...
+  .. ..$ : num [1:13, 1:12] -0.0906 0.7918 0.0688 -0.614 -0.7142 ...
+  .. ..$ : num [1:13, 1:2] 2.265 0.556 -0.287 1.176 -0.34 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -0.31 -1.287 -1.043 1.048 -0.623 ...
+  .. ..$ : num [1:13, 1:12] -1.384 1.253 -1.869 -1.209 0.581 ...
+  .. ..$ : num [1:13, 1:2] -0.2087 -1.4693 -0.0353 0.2999 0.3916 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -0.781 -0.701 -0.759 -0.17 -0.656 ...
+  .. ..$ : num [1:13, 1:12] 0.638 0.379 2.644 0.725 -1.309 ...
+  .. ..$ : num [1:13, 1:2] -0.968 0.827 -0.695 -0.258 -0.51 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -3.825 0.973 -1.875 0.696 -1.552 ...
+  .. ..$ : num [1:13, 1:12] -1.163 3.018 -0.386 0.563 0.886 ...
+  .. ..$ : num [1:13, 1:2] -0.823 1.275 -1.064 0.108 0.533 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 1.12707 0.27846 0.83054 0.52538 -0.00591 ...
+  .. ..$ : num [1:13, 1:12] -0.283 1.046 -0.21 0.597 -1.582 ...
+  .. ..$ : num [1:13, 1:2] 0.2288 0.0821 0.6853 -1.1362 0.3845 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] -0.734 -2.404 2.307 0.39 -1.361 ...
+  .. ..$ : num [1:13, 1:12] -1.633462 0.421969 -0.000241 -0.323422 -0.658956 ...
+  .. ..$ : num [1:13, 1:2] 0.686 0.238 0.376 1.135 -0.111 ...
+  ..$ :List of 3
+  .. ..$ : num [1:7, 1:12] 1.1834 0.0301 1.807 1.6352 -0.1111 ...
+  .. ..$ : num [1:13, 1:12] -0.1668 -1.8366 0.0947 0.4166 1.0737 ...
+  .. ..$ : num [1:13, 1:2] -1.254 0.478 0.724 1.522 -0.42 ...
+ $ result.matrix      : num [1:269, 1:10] 4.55e-02 8.61e-03 3.94e+03 -1.09e-01 7.73e-01 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:269] "error" "reached.threshold" "steps" "Intercept.to.1layhid1" ...
+  .. ..$ : NULL
+ - attr(*, "class")= chr "nn"
+
+
+=====================tune best model confusion matrix (for modeling)=====================
+         Actual
+Predicted non_psi psi
+  non_psi     189   4
+  psi           5  25
+tune best model error rate (for modeling):  0.04035874
+tune best model correct rate (for modeling):  0.9596413
+
+
+=====================Calculate evaluation indicators=====================
+     ANN_TP ANN_FP ANN_TN ANN_FN ANN_TPR ANN_TNR ANN_FPR ANN_FNR ANN_Prec
+[1,]     25      5    189      4   0.862   0.974   0.026   0.138    0.833
+     ANN_Recall ANN_ACC ANN_F1_score ANN_MCC
+[1,]      0.862    0.96        0.847   0.824
+
+
+=====================Filt by nn best model=====================
+below is your input data ready to be predicted...
+ num [1:11960, 1:6] 3.971 8.725 2.485 0.33 -0.402 ...
+ - attr(*, "dimnames")=List of 2
+  ..$ : NULL
+  ..$ : chr [1:6] "treatPreRpmFold" "preRpmFoldRatio" "treatAfterRpmFold" "afterRpmFoldRatio" ...
+ - attr(*, "scaled:center")= Named num [1:6] 2.6379 2.0269 3.0118 2.4295 0.0848 ...
+  ..- attr(*, "names")= chr [1:6] "treatPreRpmFold" "preRpmFoldRatio" "treatAfterRpmFold" "afterRpmFoldRatio" ...
+ - attr(*, "scaled:scale")= Named num [1:6] 3.365 2.99 4.915 4.106 0.132 ...
+  ..- attr(*, "names")= chr [1:6] "treatPreRpmFold" "preRpmFoldRatio" "treatAfterRpmFold" "afterRpmFoldRatio" ...
+pred
+non_psi     psi
+  10137    1823
+psiFinder recover (hg38_human_chr21_rRNA_known_pseudoU_SingleSites.bed) 100% rRNA psi sites in all known chrom21
+psiFinder recover (hg38.psiU.SingleSites.bed.bed) 7.67% rRNA psi sites in all known chrom21
+psiFinder+ANN recover (hg38_human_chr21_rRNA_known_pseudoU_SingleSites.bed) 95.83% rRNA psi sites in all known chrom21
+total RNA: ann build and predict programs are done!
+total RNA: ann prediction result in snakemake/output/ann/A1_versus_A2
+[Sat Jan 27 10:44:10 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: /public/home/chenzr/software/qt_project/psiFinder_dev/psiFinder_v1/build/psiFinder/.snakemake/log/2024-01-27T023954.950472.snakemake.log
+svm:"false"
+user-defined:"false"
+sites_annotation:"true"
+Getting bedAnnotator result for Ψ sites annotation...
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       bedAnnotator
+        1
+Select jobs to execute...
+
+[Sat Jan 27 10:44:11 2024]
+Job 0: Running bedAnnotator to get Ψ-sites annotation results...
+
+ann mode is selected!
+generating snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_anno.bed
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_anno.biotype.bed"
+[1] "snakemake/output/ann/A1_versus_A2/A1_versus_A2_ann_psi_prediction.bed"
+[1] "snakemake/script/annotation/hg38.psiU.SingleSites.bed"
+[1] "snakemake/script/annotation/human.hg38.Pseudo.result.col29.xlsx"
+[1] "./snakemake/genome/hg38.fa"
+[1] "snakemake/script/annotation/snoRNAbase_rRNA.fa"
+[1] "snakemake/script/annotation/snoRNAbase_snRNA.fa"
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2"
+SORTING
+VALIDATE REGIONS
+ * Checking input type... PASS
+   Input is in index format
+ * Check if index is a string... PASS
+ * Check index pattern... PASS
+ * Check for missing values... PASS
+ * Check for larger start position... PASS.
+ * Check if zero based... PASS
+FASTA-QUERY
+VALIDATE REGIONS
+ * Checking input type... PASS
+   Input is in index format
+ * Check if index is a string... PASS
+ * Check index pattern... PASS
+ * Check for missing values... PASS
+ * Check for larger start position... PASS.
+ * Check if zero based... PASS
+ * Processing input (1): bed
+CONVERT TO BED
+ * Checking input type... PASS
+   Input is in index format
+ * Checking sort order... PASS
+ * Checking for overlapping 'contiguous' regions... FAIL
+   The input for object has overlapping features!
+   This can cause unexpected results for some set operations.
+   i.e. x <- bedr.merge.region(x)
+   bedtools getfasta -bed /tmp/Rtmphpu7Pq/bed_2c0a5357ac3f4.bed -fi ./snakemake/genome/hg38.fa -tab -fo stdout
+Detecting novel psi (human.hg38.Pseudo.result.col29.xlsx: all known pseudouridylation sites download from RMBase)
+ known hit
+ FALSE 266
+  TRUE 174
+Detecting novel rRNA psi (hg38.psiU.SingleSites.bed: all known pseudouridylation sites in rRNA)
+SORTING
+VALIDATE REGIONS
+ * Checking input type... PASS
+   Input is in index format
+ * Check if index is a string... PASS
+ * Check index pattern... PASS
+ * Check for missing values... PASS
+ * Check for larger start position... PASS.
+ * Check if zero based... PASS
+FASTA-QUERY
+VALIDATE REGIONS
+ * Checking input type... PASS
+   Input is in index format
+ * Check if index is a string... PASS
+ * Check index pattern... PASS
+ * Check for missing values... PASS
+ * Check for larger start position... PASS.
+ * Check if zero based... PASS
+ * Processing input (1): bed
+CONVERT TO BED
+ * Checking input type... PASS
+   Input is in index format
+ * Checking sort order... PASS
+ * Checking for overlapping 'contiguous' regions... FAIL
+   The input for object has overlapping features!
+   This can cause unexpected results for some set operations.
+   i.e. x <- bedr.merge.region(x)
+   bedtools getfasta -bed /tmp/Rtmphpu7Pq/bed_2c0a5315dd278.bed -fi ./snakemake/genome/hg38.fa -tab -fo stdout
+ known hit
+ FALSE  10
+  TRUE  91
+Detecting novel snRNA psi (hg38.psiU.SingleSites.bed: all known pseudouridylation sites in snRNA)
+SORTING
+VALIDATE REGIONS
+ * Checking input type... PASS
+   Input is in index format
+ * Check if index is a string... PASS
+ * Check index pattern... PASS
+ * Check for missing values... PASS
+ * Check for larger start position... PASS.
+ * Check if zero based... PASS
+FASTA-QUERY
+VALIDATE REGIONS
+ * Checking input type... PASS
+   Input is in index format
+ * Check if index is a string... PASS
+ * Check index pattern... PASS
+ * Check for missing values... PASS
+ * Check for larger start position... PASS.
+ * Check if zero based... PASS
+ * Processing input (1): bed
+CONVERT TO BED
+ * Checking input type... PASS
+   Input is in index format
+ * Checking sort order... PASS
+ * Checking for overlapping 'contiguous' regions... FAIL
+   The input for object has overlapping features!
+   This can cause unexpected results for some set operations.
+   i.e. x <- bedr.merge.region(x)
+   bedtools getfasta -bed /tmp/Rtmphpu7Pq/bed_2c0a51fdcfe5d.bed -fi ./snakemake/genome/hg38.fa -tab -fo stdout
+ known hit
+ FALSE  31
+  TRUE  13
+[1] "No snRNA psi-sites overlap with snoRNAbase snRNA dataset"
+generate snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_anno_stopRatioFC.bed
+generate snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_uniq_chrloc.txt (Venn diagram input)
+generate snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_uniq_chrloc.txt (Venn diagram input)
+Finished: bedAnnotator done
+
+bedAnnotator result in snakemake/output/sites_annotation/A1_versus_A2
+[Sat Jan 27 10:44:40 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: /public/home/chenzr/software/qt_project/psiFinder_dev/psiFinder_v1/build/psiFinder/.snakemake/log/2024-01-27T104411.438254.snakemake.log
+metagene:"true"
+Getting metagene result for Ψ sites annotation...
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       metagene
+        1
+Select jobs to execute...
+
+[Sat Jan 27 10:44:41 2024]
+Job 0: Generating metagene plot...
+
+get metagene data
+metagene annotaion
+generate metagene plot from snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_metagene.txt
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_metagene.txt"
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2"
+
+3'UTR 5'UTR   CDS
+   19     8     4
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_metagene_pseudoU_standard.pdf"
+null device
+          1
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_metagene_pseudoU_norm_length.pdf"
+null device
+          1
+metagene plot end
+metagene result in ./snakemake/A1_versus_A2
+[Sat Jan 27 10:47:03 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: /public/home/chenzr/software/qt_project/psiFinder_dev/psiFinder_v1/build/psiFinder/.snakemake/log/2024-01-27T104441.326703.snakemake.log
+sites_target_prediction:"true"
+Getting ACAscan result for Ψ sites snoRNA target prediction...
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       ACAscan
+        1
+Select jobs to execute...
+
+[Sat Jan 27 10:47:04 2024]
+Job 0: Running ACAscan to get Ψ-sites snoRNA target prediction results...
+
+generating ACAscan result(_fa.out)
+generating text information for ACAscan result
+[1] "snakemake/output/sites_target_prediction/A1_versus_A2/A1_versus_A2_fa.out"
+[1] "snakemake/output/sites_annotation/A1_versus_A2/A1_versus_A2_anno.bed6.append"
+[1] "snakemake/script/target_prediction/human_hg38_snoRNABase_snoDB_rmRepeat_addorphaninfo.csv"
+[1] "snakemake/script/target_prediction/hg38.psiU.SingleSites.bed"
+[1] "snakemake/output/sites_target_prediction/A1_versus_A2/A1_versus_A2"
+Finished: ACAscan done!
+
+ACAscan result in snakemake/output/sites_target_prediction/A1_versus_A2
+[Sat Jan 27 10:48:02 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: /public/home/chenzr/software/qt_project/psiFinder_dev/psiFinder_v1/build/psiFinder/.snakemake/log/2024-01-27T104704.543847.snakemake.log
+Getting PUSscan result for Ψ sites PUS target prediction...
+
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job counts:
+        count   jobs
+        1       PUSscan
+        1
+Select jobs to execute...
+
+[Sat Jan 27 10:48:03 2024]
+Job 0: Running PUSscan to get Ψ-sites PUS target prediction results...
+
+{'PUS1': 289, 'PUS3': 69, 'TRUB1': 82}
+[Sat Jan 27 10:48:14 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: /public/home/chenzr/software/qt_project/psiFinder_dev/psiFinder_v1/build/psiFinder/.snakemake/log/2024-01-27T104803.519374.snakemake.log
+==All done!==
+Finished snakemake workflow!

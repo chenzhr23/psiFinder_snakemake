@@ -1,0 +1,1 @@
+bash snakemake/cp_unzip.sh /public/home/chenzr/PSI_Seq_brainCell/A1-A12-totalRNA-result/A1.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz ./snakemake/reads/input/A1.fasta /public/home/chenzr/PSI_Seq_brainCell/A1-A12-totalRNA-result/A2.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz ./snakemake/reads/treat/A2.fasta log/A1_versus_A2.log
