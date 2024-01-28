@@ -6,7 +6,7 @@
 
 ## Contents
 - [Pre-installation](#pre-installation)
-- [Input data](#input-data)
+- [Input data and required files](#input-data-and-required-files)
 - [Usage](#Usage)
   - [Set configuration](#set-configuration)
   - [Run psiFinder snakemake](#run-psiFinder-snakemake)
@@ -41,7 +41,7 @@ library(pacman)
 p_load("optparse","devtools","caTools","neuralnet","NeuralNetTools","dplyr","stringr","gridExtra","cowplot","pROC","mccr","ggplot2","ggpol","ggpubr","RColorBrewer","openxlsx","reshape2","factoextra","bedr","scales","e1071","tidyr")
 ```
 
-### Input data
+### Input data and required files
 Test data: 
 - Input (CMC-control) file for Ψ-sites identification:**A1.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz** (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
 - Treat (CMC-treated) file for Ψ-sites identification:**A2.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz** (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
