@@ -45,7 +45,7 @@ p_load("optparse","devtools","caTools","neuralnet","NeuralNetTools","dplyr","str
 ```
 
 ### Input data and required files
-Test data: 
+Test data and big files for the snakemake: 
 - Input (CMC-control) file for Ψ-sites identification: **A1.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz** (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
 - Treat (CMC-treated) file for Ψ-sites identification: **A2.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz** (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
 - Genome files for STAR alignment: **hg38.fa**, **hg38.fa.fai** (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/genome)
