@@ -43,11 +43,11 @@ p_load("optparse","devtools","caTools","neuralnet","NeuralNetTools","dplyr","str
 
 ### Input data
 Test data: 
-- Input (CMC-control) file for Ψ-sites identification:A1.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
-- Treat (CMC-treated) file for Ψ-sites identification:A2.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz(download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
-- Annotation file for Ψ-sites identification: hg38.gencode.v30.tRNA.refseqNcRNA.geneAnno.bed12 (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/script)
-- Annotation file for Ψ-sites annotation: hg38.genecode.v30.tRNA.snoRNA.miRNA.rmsk.exonFeatures.bed6 (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/script/annotation)
-- Annotation file for Ψ-sites metagene: gencode.v32.chr_patch_hapl_scaff.annotation.gtf (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/script/metagene)
+- Input (CMC-control) file for Ψ-sites identification:**A1.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz** (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
+- Treat (CMC-treated) file for Ψ-sites identification:**A2.cutadapt.extendedFrags.collapse.cutBarcodes.fa.gz** (download from: https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw)
+- Annotation file for Ψ-sites identification: **hg38.gencode.v30.tRNA.refseqNcRNA.geneAnno.bed12** (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/script)
+- Annotation file for Ψ-sites annotation: **hg38.genecode.v30.tRNA.snoRNA.miRNA.rmsk.exonFeatures.bed6** (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/script/annotation)
+- Annotation file for Ψ-sites metagene: **gencode.v32.chr_patch_hapl_scaff.annotation.gtf** (download from https://mega.nz/folder/oaUmhK7I#gSuYH4HW7OhL5qEbgmw0fw and deposit it in  ./snakemake/script/metagene)
 
 ### Usage
 
