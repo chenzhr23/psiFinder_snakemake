@@ -1,6 +1,8 @@
 # psiFinder_snakemake
 
-## Automated snakemake pipline with psiFinder quick start QT widget for Ψ-sites identification/annotation/target prediction
+## snakemake pipline for Ψ-sites identification/annotation/target prediction
+
+psiFinder_snakemake is a snakemake pipline (back-end code) correspond to psiFinder quick start QT widget (front-end user interface).
 
 ![quick_start](quick_start.png)
 
@@ -57,7 +59,14 @@ Test data and big files for the snakemake:
 
 #### Set configuration
 
+psiFinder_snakemake require a **quickstart_config.yml** file to get user option and start the running:
+
 ![quickstart_config](quickstart_config.png)
+
+Or user **psiFinder quick start QT widget** to interactively run psiFinder_snakemake:
+
+![quick_start](quick_start.png)
+
 
 #### Run psiFinder snakemake
 ```shell
