@@ -63,7 +63,7 @@ psiFinder_snakemake require a **quickstart_config.yml** file to get user option 
 
 ![quickstart_config](quickstart_config.png)
 
-Or user **psiFinder quick start QT widget** to interactively run psiFinder_snakemake:
+Or use **psiFinder quick start QT widget** to interactively run psiFinder_snakemake:
 
 ![quick_start](quick_start.png)
 
