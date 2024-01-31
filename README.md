@@ -18,19 +18,19 @@ psiFinder_snakemake is a snakemake pipline (back-end code) correspond to psiFind
 
 Required perl modules:
 ```perl
-use Getopt::Long;
-use Bio::Perl;
-use Bio::SeqIO;
+cpan Getopt::Long;
+cpan Bio::Perl;
+cpan Bio::SeqIO;
 ```
 
 Required python modules:
 ```python
-import pandas as pd
-import matplotlib.pyplot as plt
-import numpy as np
-import pickle
-from sklearn.feature_extraction.text import CountVectorizer
-import argparse
+pip install pandas
+pip install matplotlib
+pip install numpy
+pip install pickle
+pip install scikit-learn
+pip install argparse
 ```
 
 Required R packages:
