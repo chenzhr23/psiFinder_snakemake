@@ -15,7 +15,7 @@ afterRpmFoldRatio=$6
 treatStopRatio=$7
 stopRatioFC=$8
 
-echo "rtsSeeker User-defined mode: rtsSeeker start..."
+echo "psiFinder User-defined mode: psiFinder start..."
 
 awk 'FS=OFS="\t" {if($1~/^chr[0-9|a-z|A-Z]*$/ && $10=="T" && $14>10){print $0}}' $out > ${output_path}_user_defined_filt.bed
 echo -e "treatPreRpmFold\tpreRpmFoldRatio\ttreatAfterRpmFold\tafterRpmFoldRatio\ttreatStopRatio\tstopRatioFC\n$treatPreRpmFold\t$preRpmFoldRatio\t$treatAfterRpmFold\t$afterRpmFoldRatio\t$treatStopRatio\t$stopRatioFC" >${output_path}_user_defined_thres_colname.txt

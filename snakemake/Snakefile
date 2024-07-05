@@ -10,7 +10,7 @@ rule all:
         expand('snakemake/output/sites_annotation/{input}_versus_{treat}/{input}_versus_{treat}_metagene_pseudoU_norm_length.pdf',input = input_fastq,treat=treat_fastq),
         expand('snakemake/output/ann/{input}_versus_{treat}/{input}_versus_{treat}_ann_psi_prediction.bed',input = input_fastq,treat=treat_fastq),
         expand('snakemake/output/svm/{input}_versus_{treat}/{input}_versus_{treat}_svm_psi_prediction.bed',input = input_fastq,treat=treat_fastq),
-        expand('snakemake/output/user_defined/{input}_versus_{treat}/{input}_versus_{treat}_user_defined_prediction.bed',input = input_fastq,treat=treat_fastq),
+        expand('snakemake/output/user_defined/{input}_versus_{treat}/{input}_versus_{treat}_user_defined_psi_prediction.bed',input = input_fastq,treat=treat_fastq),
         expand('snakemake/output/sites_annotation/{input}_versus_{treat}/{input}_versus_{treat}_add_seq_group_uniq.bed',input = input_fastq,treat=treat_fastq),
         expand('snakemake/output/sites_target_prediction/{input}_versus_{treat}/{input}_versus_{treat}_fa.out',input = input_fastq,treat=treat_fastq),
         expand('snakemake/output/sites_target_prediction/{input}_versus_{treat}/overall_multinomialnb_model_prediction.txt',input = input_fastq,treat=treat_fastq)
@@ -98,33 +98,33 @@ rule star_treat:
     script:
         "script/star_align.py"
 
-rule rtsSeeker:
+rule psiFinder:
     input:
-        rtsSeeker_input = rules.star_input.output,
-        rtsSeeker_treat = rules.star_treat.output,
+        psiFinder_input = rules.star_input.output,
+        psiFinder_treat = rules.star_treat.output,
         ref_fa = "snakemake/genome/"+ config["assembly"]+".fa",
         ref_fa_fai = "snakemake/genome/" + config["assembly"] +".fa.fai"
     output:
         "snakemake/output/sites_identification/{input}_versus_{treat}/{input}_versus_{treat}.bed"
     message:
-        "Running rtsSeeker to get Ψ-sites identification results..."
+        "Running psiFinder to get Ψ-sites identification results..."
     params:
         extra = "-p 1.5 -t 5 -r 0.05 -M 1 --gene snakemake/script/hg38.gencode.v30.tRNA.refseqNcRNA.geneAnno.bed12 -f 1 -m 0 -s -w 20"
     log:
-        rtsSeeker_log = "snakemake/logs/{input}_versus_{treat}_rtsSeeker.log"
+        psiFinder_log = "snakemake/logs/{input}_versus_{treat}_psiFinder.log"
     shell:
         """
-        snakemake/script/rtsSeeker --fa {input.ref_fa} \
+        snakemake/script/psiFinder --fa {input.ref_fa} \
         --fai {input.ref_fa_fai} \
-        --treat {input.rtsSeeker_treat} \
-        --input {input.rtsSeeker_input} \
+        --treat {input.psiFinder_treat} \
+        --input {input.psiFinder_input} \
         {params.extra} \
-        -o {output} 2> {log.rtsSeeker_log}
+        -o {output} 2> {log.psiFinder_log}
         """
 
 rule ANN:
     input:
-        out = rules.rtsSeeker.output
+        out = rules.psiFinder.output
     output:
         "snakemake/output/ann/{input}_versus_{treat}/{input}_versus_{treat}_ann_psi_prediction.bed"
     message:
@@ -138,7 +138,7 @@ rule ANN:
 
 rule SVM:
     input:
-        out = rules.rtsSeeker.output
+        out = rules.psiFinder.output
     output:
         "snakemake/output/svm/{input}_versus_{treat}/{input}_versus_{treat}_svm_psi_prediction.bed"
     message:
@@ -152,7 +152,7 @@ rule SVM:
 
 rule User_defined:
     input:
-        out = rules.rtsSeeker.output
+        out = rules.psiFinder.output
     output:
         "snakemake/output/user_defined/{input}_versus_{treat}/{input}_versus_{treat}_user_defined_psi_prediction.bed"
     params:
@@ -227,7 +227,7 @@ rule metagene:
 
 rule ACAscan:
     input:
-        # ACAscan_input = rules.rtsSeeker.output,
+        # ACAscan_input = rules.psiFinder.output,
         ACAscan_input = rules.bedAnnotator.output,
         acaboxseq = "snakemake/script/target_prediction/human_hg38_snoRNABase_snoDB_rmRepeat.collapse.fa"
     output:
@@ -246,7 +246,7 @@ rule ACAscan:
 
 rule PUSscan:
     input:
-        # PUSscan_input = rules.rtsSeeker.output,
+        # PUSscan_input = rules.psiFinder.output,
         PUSscan_input = rules.bedAnnotator.output,
         pre_build_model = "snakemake/script/target_prediction/overall_multinomialnb_model.pkl"
     output:

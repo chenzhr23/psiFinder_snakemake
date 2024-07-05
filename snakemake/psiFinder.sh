@@ -114,15 +114,15 @@ else
   snakemake -s snakemake/Snakefile --cores 8 snakemake/genome/"${temp}"
 fi
 
-#rtsSeeker result
+#psiFinder result
 echo -e "sites_identification:${quickstart_array[31]}"
 if [[ "${quickstart_array[31]}" =~ "true"  ]] ;
 then
-    echo -e "Getting rtsSeeker result for Ψ sites identification...\n"
+    echo -e "Getting psiFinder result for Ψ sites identification...\n"
     snakemake -s snakemake/Snakefile --cores 8 snakemake/output/sites_identification/"${input}"_versus_"${treat}"/"${input}"_versus_"${treat}".bed
 fi
 
-#rtsSeeker ann
+#psiFinder ann
 echo -e "ann:${quickstart_array[49]}"
 if [[ "${quickstart_array[49]}" =~ "true"  ]] ;
 then
@@ -130,7 +130,7 @@ then
     snakemake -s snakemake/Snakefile --cores 8 snakemake/output/ann/"${input}"_versus_"${treat}"/"${input}"_versus_"${treat}"_ann_psi_prediction.bed
 fi
 
-#rtsSeeker svm
+#psiFinder svm
 echo -e "svm:${quickstart_array[45]}"
 if [[ "${quickstart_array[45]}" =~ "true"  ]] ;
 then
@@ -138,7 +138,7 @@ then
     snakemake -s snakemake/Snakefile --cores 8 snakemake/output/svm/"${input}"_versus_"${treat}"/"${input}"_versus_"${treat}"_svm_psi_prediction.bed
 fi
 
-#rtsSeeker user-defined
+#psiFinder user-defined
 echo -e "user-defined:${quickstart_array[51]}"
 if [[ "${quickstart_array[51]}" =~ "true"  ]] ;
 then
@@ -162,7 +162,7 @@ then
     snakemake -s snakemake/Snakefile --cores 8 snakemake/output/sites_annotation/"${input}"_versus_"${treat}"/"${input}"_versus_"${treat}"_metagene_pseudoU_norm_length.pdf
 fi
 
-#ACAscan
+#ACAscan and PUSscan
 echo -e "sites_target_prediction:${quickstart_array[35]}"
 if [[ "${quickstart_array[35]}" =~ "true"  ]] ;
 then

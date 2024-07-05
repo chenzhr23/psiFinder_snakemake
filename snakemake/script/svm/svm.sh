@@ -2,7 +2,7 @@
 
 if [[ $# -ne 2 ]]
 then
-    echo 'Usage: '$0 ' rtsSeeker.bed output_path'  
+    echo 'Usage: '$0 ' psiFinder.bed output_path'  
     exit 1
 fi 
 
@@ -10,7 +10,7 @@ out=$1
 output_path=$2
 output_path=${output_path%_svm_psi_prediction.bed}
 
-echo "rtsSeeker svm mode: start filtering rtsSeeker result..."
+echo "psiFinder svm mode: start filtering psiFinder result..."
 awk 'FS=OFS="\t" {if($1~/^chr[0-9|a-z|A-Z]*$/ && $10=="T" && $14>10){print $0}}' $out > ${output_path}_svm_filt_totalRNA.bed
 bedtools intersect -a ${output_path}_svm_filt_totalRNA.bed -b $(dirname "$0")/hg38_human_chr21_rRNA_known_pseudoU_SingleSites.bed -s > ${output_path}_knowpse.bed
 bedtools intersect -a ${output_path}_svm_filt_totalRNA.bed -b $(dirname "$0")/rrna_chr21.bed -s > ${output_path}_rrna.bed
